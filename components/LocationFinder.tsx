@@ -2,9 +2,8 @@ import React, { useEffect, useState } from "react";
 
 import { Text, StyleSheet, View, Button } from "react-native";
 import MapView from "react-native-maps";
-import { Marker, Region, LatLng } from 'react-native-maps';
+import { Marker, Region, LatLng } from "react-native-maps";
 import { getCurrentLocation } from "../utils/location";
-
 
 const getInintialPosition = () => {
   return {
@@ -15,14 +14,16 @@ const getInintialPosition = () => {
   };
 };
 
-
 export default function LocationFinder() {
-
   const [region, setRegion] = useState<Region>(getInintialPosition());
-  const [markerLocation, setMarkerLocation] = useState<LatLng>(getInintialPosition());
+  const [markerLocation, setMarkerLocation] = useState<LatLng>(
+    getInintialPosition()
+  );
 
   const [syncLocation, setSyncLocation] = useState(false);
-  const tirggerSyncLocation = () => { setSyncLocation(syncLocation => !syncLocation) };
+  const tirggerSyncLocation = () => {
+    setSyncLocation((syncLocation) => !syncLocation);
+  };
   // sync location on mount or press of button
   useEffect(() => {
     (async () => {
@@ -33,7 +34,6 @@ export default function LocationFinder() {
       }
     })();
   }, [syncLocation]);
-
 
   return (
     <>
@@ -47,19 +47,12 @@ export default function LocationFinder() {
             setMarkerLocation(e.nativeEvent.coordinate);
           }}
         >
-          <Marker
-            title="selected location"
-            coordinate={markerLocation}
-          />
-
-
+          <Marker title="selected location" coordinate={markerLocation} />
         </MapView>
       </View>
       <View style={styles.actionContainer}>
-
         <View style={styles.actionButton}>
           <Button
-
             title="resync current location"
             onPress={tirggerSyncLocation}
           />
@@ -68,7 +61,11 @@ export default function LocationFinder() {
         <View style={styles.actionButton}>
           <Button
             title="Go to data page"
-            onPress={() => console.log(`go to ${markerLocation.latitude} and ${markerLocation.longitude}`)}
+            onPress={() =>
+              console.log(
+                `go to ${markerLocation.latitude} and ${markerLocation.longitude}`
+              )
+            }
           />
         </View>
 
@@ -76,7 +73,6 @@ export default function LocationFinder() {
           <Text>{`marker is pointing to ${markerLocation.latitude},${markerLocation.longitude}`}</Text>
         </View>
       </View>
-
     </>
   );
 }
@@ -91,10 +87,10 @@ const styles = StyleSheet.create({
   actionContainer: {
     marginTop: 420,
     marginLeft: 20,
-    position: 'absolute',
+    position: "absolute",
     height: 200,
-    alignContent: 'space-between',
-    flexDirection: 'column',
+    alignContent: "space-between",
+    flexDirection: "column",
   },
   actionButton: {
     margin: 10,
