@@ -19,10 +19,19 @@ export default function FirstPage({ navigation }: Props) {
   return (
     <View style={styles.container}>
       <Text>Home Screen</Text>
-      <Button
-        title="Go to other page"
-        onPress={() => navigation.navigate("OtherPage")}
-      />
+      <View style={styles.button}>
+        <Button
+          title="Go to other page baby"
+          onPress={() => navigation.navigate("OtherPage")}
+        />
+      </View>
+
+      <View style={styles.button}>
+        <Button
+          title="Go to map page"
+          onPress={() => navigation.navigate("LocationPage")}
+        />
+      </View>
       <VictoryChart width={350} theme={VictoryTheme.material}>
         <VictoryBar data={data} x="quarter" y="earnings" />
       </VictoryChart>
@@ -34,5 +43,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: "column",
+  },
+  button: {
+    margin: 10,
   },
 });
