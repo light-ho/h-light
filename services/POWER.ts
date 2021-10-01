@@ -11,3 +11,11 @@ export interface POWERApiParams {
 export interface IPOWER {
   getByParameters(params: POWERApiParams): Promise<any>;
 }
+
+export class POWER implements IPOWER{
+	getByParameters(params: POWERApiParams): Promise<any> {
+		// TODO osama should implement this 
+		throw new Error("Method not implemented.");
+	}
+
+}
