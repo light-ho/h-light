@@ -17,12 +17,12 @@ export default function FirstPage({ navigation }: Props) {
           onPress={() => navigation.navigate("OtherPage")}
         />
       </View>
-      
+
       <View style={styles.button}>
-      <Button
-        title="Go to map page"
-        onPress={() => navigation.navigate("LocationPage")}
-      />
+        <Button
+          title="Go to map page"
+          onPress={() => navigation.navigate("LocationPage")}
+        />
       </View>
     </View>
   );
@@ -35,5 +35,5 @@ const styles = StyleSheet.create({
   },
   button: {
     margin: 10,
-  }
+  },
 });

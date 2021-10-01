@@ -12,7 +12,6 @@ export default function LocationPage(props: Props) {
   return (
     <View style={styles.container}>
       <LocationFinder />
-      
     </View>
   );
 }
