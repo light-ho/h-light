@@ -6,6 +6,7 @@ import FirstPage from "../screens/FirstPage";
 import { RootStackParamList } from "./screens";
 
 import OtherPage from "../screens/OtherPage";
+import LocationPage from '../screens/LocationPage';
 
 const RootStack = createNativeStackNavigator<RootStackParamList>();
 
@@ -18,12 +19,16 @@ function Navigator() {
         <RootStack.Screen
           name="FirstPage"
           component={FirstPage}
-          options={{ headerShown: false }}
         />
         <RootStack.Screen
           name="OtherPage"
           component={OtherPage}
           options={{ title: "otherPage" }}
+        />
+        <RootStack.Screen
+          name="LocationPage"
+          component={LocationPage}
+          options={{title: "LocationPage"}}
         />
       </RootStack.Navigator>
     </NavigationContainer>

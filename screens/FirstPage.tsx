@@ -11,10 +11,19 @@ export default function FirstPage({ navigation }: Props) {
   return (
     <View style={styles.container}>
       <Text>Home Screen</Text>
+      <View style={styles.button}>
+        <Button
+          title="Go to other page"
+          onPress={() => navigation.navigate("OtherPage")}
+        />
+      </View>
+      
+      <View style={styles.button}>
       <Button
-        title="Go to other page"
-        onPress={() => navigation.navigate("OtherPage")}
+        title="Go to map page"
+        onPress={() => navigation.navigate("LocationPage")}
       />
+      </View>
     </View>
   );
 }
@@ -24,4 +33,7 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "column",
   },
+  button: {
+    margin: 10,
+  }
 });
