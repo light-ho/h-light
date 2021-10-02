@@ -16,7 +16,6 @@ export interface IPOWER {
 
 export class POWER implements IPOWER {
   getUpdatedUrl(params: POWERApiParams): Promise<any> {
-
     let url = this.getApiUrl(params.resolution || "hourly");
 
     //change long
