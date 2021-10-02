@@ -1,12 +1,14 @@
 import * as React from "react";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../navigation/screens";
-import { Alert, Text, View, StyleSheet, Button } from "react-native";
+import { Alert, Text, View, StyleSheet, Button, TextInput } from "react-native";
 import { Formik } from "formik";
-import { TextField } from "react-native-material-textfield";
+// import { TextField } from "react-native-material-textfield";
 import * as Yup from "yup";
 
 type Props = NativeStackScreenProps<RootStackParamList, "CostEntryScreen">;
+
+const fontSize = 20;
 
 export function CostEntryScreen({ navigation }: Props) {
   const months = [
@@ -61,16 +63,21 @@ export function CostEntryScreen({ navigation }: Props) {
         {(formik) => {
           return (
             <>
-              {months.map((m) => {
+              {months.map((m) => (
                 <View style={style.KeyValueStyle}>
-                  {m}{" "}
-                  <TextField
-                    label={m}
+                  <Text
+                    style={{ flex: 1, fontSize: fontSize }}
+                  >{m}{" "}</Text>
+
+                  <TextInput
+                    style={{ flex: 1, fontSize: fontSize, backgroundColor: "#FEF" }}
+                    // label={m}
+                    placeholder={"12"}
                     keyboardType="numeric"
                     onChangeText={formik.handleChange(m)}
                   />
-                </View>;
-              })}
+                </View>
+              ))}
               <Button
                 onPress={() => {
                   formik.submitForm();
@@ -88,5 +95,8 @@ export function CostEntryScreen({ navigation }: Props) {
 const style = StyleSheet.create({
   KeyValueStyle: {
     flexDirection: "row",
+    justifyContent: "space-between",
+
+
   },
 });
