@@ -7,6 +7,7 @@ import { RootStackParamList } from "./screens";
 
 import OtherPage from "../screens/OtherPage";
 import LocationPage from "../screens/LocationPage";
+import { CostEntryScreen } from "../screens/CostEntry";
 
 const RootStack = createNativeStackNavigator<RootStackParamList>();
 
@@ -26,6 +27,11 @@ function Navigator() {
           name="LocationPage"
           component={LocationPage}
           options={{ title: "LocationPage" }}
+        />
+        <RootStack.Screen
+          name="CostEntryScreen"
+          component={CostEntryScreen}
+          options={{ title: "CostEntryScreen" }}
         />
       </RootStack.Navigator>
     </NavigationContainer>

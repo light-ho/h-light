@@ -32,6 +32,12 @@ export default function FirstPage({ navigation }: Props) {
           onPress={() => navigation.navigate("LocationPage")}
         />
       </View>
+      <View style={styles.button}>
+        <Button
+          title="Go to cost"
+          onPress={() => navigation.navigate("CostEntryScreen")}
+        />
+      </View>
       <VictoryChart width={350} theme={VictoryTheme.material}>
         <VictoryBar data={data} x="quarter" y="earnings" />
       </VictoryChart>
