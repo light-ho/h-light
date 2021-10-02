@@ -7,7 +7,6 @@ import { getCurrentLocation } from "../utils/location";
 
 import { STORAGEKEYS, storeData } from "../utils/asyncStorage";
 
-
 const getInintialPosition = () => {
   return {
     latitude: 27.04927786334186,
@@ -24,7 +23,7 @@ export default function LocationFinder() {
   );
   const setLocationGlobal = async (location: LatLng) => {
     await storeData(STORAGEKEYS.location, JSON.stringify(location));
-  }
+  };
 
   const [syncLocation, setSyncLocation] = useState(false);
   const tirggerSyncLocation = () => {
