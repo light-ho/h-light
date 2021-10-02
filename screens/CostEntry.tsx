@@ -1,9 +1,17 @@
 import * as React from "react";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../navigation/screens";
-import { Alert, Text, View, StyleSheet, Button, TextInput } from "react-native";
+import {
+  Alert,
+  View,
+  Text,
+  ScrollView,
+  StyleSheet,
+  Button,
+  TextInput,
+} from "react-native";
 import { Formik } from "formik";
-// import { TextField } from "react-native-material-textfield";
+import { OutlinedTextField } from "rn-material-ui-textfield";
 import * as Yup from "yup";
 
 type Props = NativeStackScreenProps<RootStackParamList, "CostEntryScreen">;
@@ -27,8 +35,7 @@ export function CostEntryScreen({ navigation }: Props) {
   ];
 
   return (
-    <View>
-      <Text>Add costs</Text>
+    <ScrollView>
       <Formik
         initialValues={{
           January: "",
@@ -64,18 +71,40 @@ export function CostEntryScreen({ navigation }: Props) {
           return (
             <>
               {months.map((m) => (
-                <View style={style.KeyValueStyle}>
-                  <Text
-                    style={{ flex: 1, fontSize: fontSize }}
-                  >{m}{" "}</Text>
-
-                  <TextInput
-                    style={{ flex: 1, fontSize: fontSize, backgroundColor: "#FEF" }}
-                    // label={m}
-                    placeholder={"12"}
-                    keyboardType="numeric"
-                    onChangeText={formik.handleChange(m)}
-                  />
+                <View style={{ flex: 1 }}>
+                  <ScrollView key={m}>
+                    <View style={style.KeyValueStyle}>
+                      <Text style={{ flex: 1, fontSize: fontSize }}>{m} </Text>
+                      <TextInput
+                        onChangeText={formik.handleChange(m)}
+                        keyboardType="numeric"
+                        onBlur={() => {
+                          formik.setFieldTouched(m);
+                        }}
+                        // @ts-ignore
+                        value={formik.values[m]}
+                        style={{
+                          flex: 2,
+                          borderColor: "#acacac",
+                          borderWidth: 1,
+                          borderStyle: "solid",
+                          padding: 12,
+                          margin: 8,
+                        }}
+                      />
+                    </View>
+                    {
+                      //@ts-ignore
+                      formik.errors[m] && formik.touched[m] && (
+                        <Text style={style.error}>
+                          {
+                            //@ts-ignore
+                            formik.errors[m]
+                          }
+                        </Text>
+                      )
+                    }
+                  </ScrollView>
                 </View>
               ))}
               <Button
@@ -88,15 +117,16 @@ export function CostEntryScreen({ navigation }: Props) {
           );
         }}
       </Formik>
-    </View>
+    </ScrollView>
   );
 }
 
 const style = StyleSheet.create({
   KeyValueStyle: {
     flexDirection: "row",
-    justifyContent: "space-between",
-
-
+    alignItems: "center",
+  },
+  error: {
+    color: "#ea2314",
   },
 });

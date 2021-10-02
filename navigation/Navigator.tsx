@@ -31,7 +31,7 @@ function Navigator() {
         <RootStack.Screen
           name="CostEntryScreen"
           component={CostEntryScreen}
-          options={{ title: "CostEntryScreen" }}
+          options={{ title: "Costs entry" }}
         />
       </RootStack.Navigator>
     </NavigationContainer>
