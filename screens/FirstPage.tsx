@@ -12,7 +12,7 @@ import { getData, STORAGEKEYS } from "../utils/asyncStorage";
 import { useEffect, useState } from "react";
 import { LatLng } from "react-native-maps";
 
-type Props = NativeStackScreenProps<RootStackParamList, "FirstPage">;
+type Props = NativeStackScreenProps<RootStackParamList, "Home">;
 
 const avg = (arr: number[]) => {
   return arr.reduce((a, b) => a + b, 0) / arr.length;
