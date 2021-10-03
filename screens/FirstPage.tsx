@@ -11,14 +11,14 @@ import Tile from "../components/tile";
 import { getData, STORAGEKEYS } from "../utils/asyncStorage";
 import { useEffect, useState } from "react";
 import { LatLng } from "react-native-maps";
-import { IPOWER, POWER } from '../services/POWER';
+import { IPOWER, POWER } from "../services/POWER";
 
 type Props = NativeStackScreenProps<RootStackParamList, "Home">;
 
 const avg = (arr: number[]) => {
   return arr.reduce((a, b) => a + b, 0) / arr.length;
 };
-type t2mDataType = { date: string, value: number }[]
+type t2mDataType = { date: string; value: number }[];
 export default function FirstPage({ navigation }: Props) {
   // const data = [
   //   { quarter: 1, earnings: 13000 },
@@ -26,8 +26,6 @@ export default function FirstPage({ navigation }: Props) {
   //   { quarter: 3, earnings: 14250 },
   //   { quarter: 4, earnings: 19000 },
   // ];
-
-
 
   const [markedLocation, setMarkedLocation] = useState<LatLng | undefined>(
     undefined
@@ -55,35 +53,33 @@ export default function FirstPage({ navigation }: Props) {
     });
   }, []);
 
-
-
   const [data, setData] = useState<t2mDataType | undefined>(undefined);
 
-  console.log(data)
+  console.log(data);
   useEffect(() => {
     if (markedLocation) {
-      const power = new POWER()
-      power.getUpdatedUrl({
-        long: markedLocation.longitude,
-        lat: markedLocation.latitude,
-        from: new Date(new Date().setFullYear(new Date().getFullYear() - 2)),
-        to: new Date(new Date().setFullYear(new Date().getFullYear() - 1)),
-        resolution: "monthly"
-      }).then(res => {
-        // console.log(res)
-        const t2m_data = res.properties.parameter.T2M
-        const t2m_object = Object.keys(t2m_data).map(k => {
-          return {
-            "date": k.split(/.{4}/)[1]
-            , value: t2m_data[k]
-          }
+      const power = new POWER();
+      power
+        .getUpdatedUrl({
+          long: markedLocation.longitude,
+          lat: markedLocation.latitude,
+          from: new Date(new Date().setFullYear(new Date().getFullYear() - 2)),
+          to: new Date(new Date().setFullYear(new Date().getFullYear() - 1)),
+          resolution: "monthly",
         })
-        setData(t2m_object)
-      })
-
+        .then((res) => {
+          // console.log(res)
+          const t2m_data = res.properties.parameter.T2M;
+          const t2m_object = Object.keys(t2m_data).map((k) => {
+            return {
+              date: k.split(/.{4}/)[1],
+              value: t2m_data[k],
+            };
+          });
+          setData(t2m_object);
+        });
     }
-
-  }, [markedLocation])
+  }, [markedLocation]);
 
   const location_formatted = markedLocation
     ? `${markedLocation.latitude}, ${markedLocation.longitude}`
@@ -93,12 +89,10 @@ export default function FirstPage({ navigation }: Props) {
     ? `${avg(monthlyBills)} K`
     : "history cost not set";
 
-
-
-  console.log("home log *------------------------*")
-  console.log(location_formatted)
-  console.log(cost_formatted)
-  console.log(bills_formatted)
+  console.log("home log *------------------------*");
+  console.log(location_formatted);
+  console.log(cost_formatted);
+  console.log(bills_formatted);
 
   return (
     <View style={styles.container}>
@@ -121,16 +115,15 @@ export default function FirstPage({ navigation }: Props) {
           content={bills_formatted}
         />
       </View>
-      {data &&
+      {data && (
         <View style={styles.reportContatiner}>
           <Text style={{ fontSize: 20 }}>report</Text>
           <VictoryChart width={350} theme={VictoryTheme.material}>
             <VictoryBar data={data} x="date" y="value" />
           </VictoryChart>
         </View>
-      }
+      )}
     </View>
-
   );
 }
 

@@ -35,17 +35,12 @@ export function CostEntryScreen({ navigation }: Props) {
     "December",
   ];
 
-
-
-  const onsubmit = (values:any)=>{
-    console.log(values)
-    storeData(STORAGEKEYS.MonthlyBills,values).then(
-      ()=>{
-        navigation.navigate("Home")
-      }
-    )
-    
-  }
+  const onsubmit = (values: any) => {
+    console.log(values);
+    storeData(STORAGEKEYS.MonthlyBills, values).then(() => {
+      navigation.navigate("Home");
+    });
+  };
   return (
     <ScrollView>
       <Formik

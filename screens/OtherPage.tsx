@@ -6,7 +6,7 @@ import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../navigation/screens";
 import { useState, useEffect } from "react";
 import { STORAGEKEYS, storeData } from "../utils/asyncStorage";
-import { GLOBALVALUES } from '../globalstyle';
+import { GLOBALVALUES } from "../globalstyle";
 
 type Props = NativeStackScreenProps<RootStackParamList, "solarCost">;
 
@@ -16,7 +16,7 @@ export default function OtherPage({ navigation }: Props) {
   useEffect(() => {
     async () => {
       if (solarCost) {
-        console.log(solarCost)
+        console.log(solarCost);
         await storeData(STORAGEKEYS.solarCost, solarCost);
       }
     };
@@ -34,10 +34,11 @@ export default function OtherPage({ navigation }: Props) {
         keyboardType={"number-pad"}
         placeholder={"0"}
       />
-      <Button 
-      title="done" 
-      color={GLOBALVALUES.thirdColor}
-      onPress={() => navigation.goBack()} />
+      <Button
+        title="done"
+        color={GLOBALVALUES.thirdColor}
+        onPress={() => navigation.goBack()}
+      />
     </View>
   );
 }

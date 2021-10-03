@@ -14,17 +14,13 @@ export interface IPOWER {
   getUpdatedUrl(params: POWERApiParams): Promise<any>;
 }
 
-const date2isodata = (date:Date)=>{ 
-  let mydate = date.toISOString().split('T')[0]
-  return mydate.replace(/-/g,"")
-}
-
+const date2isodata = (date: Date) => {
+  let mydate = date.toISOString().split("T")[0];
+  return mydate.replace(/-/g, "");
+};
 
 export class POWER implements IPOWER {
   getUpdatedUrl(params: POWERApiParams): Promise<any> {
-    
-    
-    
     let url = this.getApiUrl(params.resolution || "hourly");
 
     //change long
@@ -73,8 +69,8 @@ export class POWER implements IPOWER {
   }
 
   getPowerData(url: string) {
-    console.log(url)
-    
+    console.log(url);
+
     return apiInstance
       .get(url, {})
       .then((res) => {
