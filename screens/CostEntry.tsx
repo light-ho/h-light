@@ -19,6 +19,7 @@ type Props = NativeStackScreenProps<RootStackParamList, "CostEntryScreen">;
 const fontSize = 20;
 
 export function CostEntryScreen({ navigation }: Props) {
+  const [costs, setCosts] = React.useState<any>({});
   const months = [
     "January ",
     "February",
@@ -71,40 +72,38 @@ export function CostEntryScreen({ navigation }: Props) {
           return (
             <>
               {months.map((m) => (
-                <View style={{ flex: 1 }}>
-                  <ScrollView key={m}>
-                    <View style={style.KeyValueStyle}>
-                      <Text style={{ flex: 1, fontSize: fontSize }}>{m} </Text>
-                      <TextInput
-                        onChangeText={formik.handleChange(m)}
-                        keyboardType="numeric"
-                        onBlur={() => {
-                          formik.setFieldTouched(m);
-                        }}
-                        // @ts-ignore
-                        value={formik.values[m]}
-                        style={{
-                          flex: 2,
-                          borderColor: "#acacac",
-                          borderWidth: 1,
-                          borderStyle: "solid",
-                          padding: 12,
-                          margin: 8,
-                        }}
-                      />
-                    </View>
-                    {
-                      //@ts-ignore
-                      formik.errors[m] && formik.touched[m] && (
-                        <Text style={style.error}>
-                          {
-                            //@ts-ignore
-                            formik.errors[m]
-                          }
-                        </Text>
-                      )
-                    }
-                  </ScrollView>
+                <View key={m}>
+                  <View style={style.KeyValueStyle}>
+                    <Text style={{ flex: 1, fontSize: fontSize }}>{m} </Text>
+                    <TextInput
+                      onChangeText={formik.handleChange(m)}
+                      keyboardType="numeric"
+                      onBlur={() => {
+                        formik.setFieldTouched(m);
+                      }}
+                      // @ts-ignore
+                      value={formik.values[m]}
+                      style={{
+                        flex: 2,
+                        borderColor: "#acacac",
+                        borderWidth: 1,
+                        borderStyle: "solid",
+                        padding: 12,
+                        margin: 8,
+                      }}
+                    />
+                  </View>
+                  {
+                    //@ts-ignore
+                    formik.errors[m] && formik.touched[m] && (
+                      <Text style={style.error}>
+                        {
+                          //@ts-ignore
+                          formik.errors[m]
+                        }
+                      </Text>
+                    )
+                  }
                 </View>
               ))}
               <Button
