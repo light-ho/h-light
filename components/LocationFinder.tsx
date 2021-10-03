@@ -5,6 +5,8 @@ import MapView from "react-native-maps";
 import { Marker, Region, LatLng } from "react-native-maps";
 import { getCurrentLocation } from "../utils/location";
 
+import { STORAGEKEYS, storeData } from "../utils/asyncStorage";
+
 const getInintialPosition = () => {
   return {
     latitude: 27.04927786334186,
@@ -19,6 +21,9 @@ export default function LocationFinder() {
   const [markerLocation, setMarkerLocation] = useState<LatLng>(
     getInintialPosition()
   );
+  const setLocationGlobal = async (location: LatLng) => {
+    await storeData(STORAGEKEYS.location, JSON.stringify(location));
+  };
 
   const [syncLocation, setSyncLocation] = useState(false);
   const tirggerSyncLocation = () => {
@@ -30,7 +35,8 @@ export default function LocationFinder() {
       const location = await getCurrentLocation();
       if (location) {
         setRegion({ ...region, ...location.coords });
-        setMarkerLocation({ ...location.coords });
+        setMarkerLocation(location.coords);
+        setLocationGlobal(location.coords);
       }
     })();
   }, [syncLocation]);
@@ -45,6 +51,7 @@ export default function LocationFinder() {
           onRegionChangeComplete={(region) => setRegion(region)}
           onPress={(e) => {
             setMarkerLocation(e.nativeEvent.coordinate);
+            setLocationGlobal(e.nativeEvent.coordinate);
           }}
         >
           <Marker title="selected location" coordinate={markerLocation} />

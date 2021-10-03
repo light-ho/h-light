@@ -9,7 +9,7 @@ export async function getCurrentLocation(): Promise<
     console.error("Location permission not granted");
     return;
   }
-
+  // TODO add required acuracy
   let location = await Location.getCurrentPositionAsync({});
   return location;
 }
