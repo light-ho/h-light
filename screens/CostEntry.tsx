@@ -11,7 +11,6 @@ import {
   TextInput,
 } from "react-native";
 import { Formik } from "formik";
-import { OutlinedTextField } from "rn-material-ui-textfield";
 import * as Yup from "yup";
 
 type Props = NativeStackScreenProps<RootStackParamList, "CostEntryScreen">;
@@ -21,7 +20,7 @@ const fontSize = 20;
 export function CostEntryScreen({ navigation }: Props) {
   const [costs, setCosts] = React.useState<any>({});
   const months = [
-    "January ",
+    "January",
     "February",
     "March",
     "April",
@@ -52,7 +51,7 @@ export function CostEntryScreen({ navigation }: Props) {
           November: "",
           December: "",
         }}
-        onSubmit={(values) => Alert.alert(JSON.stringify(values))}
+        onSubmit={(values) => console.log(JSON.stringify(values))}
         validationSchema={Yup.object({
           January: Yup.number().required(),
           February: Yup.number().required(),
