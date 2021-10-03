@@ -1,6 +1,6 @@
 import * as React from "react";
 
-import { View, Text, Button, StyleSheet } from "react-native";
+import { View, StyleSheet, Button } from "react-native";
 
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../navigation/screens";
@@ -12,6 +12,7 @@ export default function LocationPage(props: Props) {
   return (
     <View style={styles.container}>
       <LocationFinder />
+      <Button title="done" onPress={() => props.navigation.goBack()} />
     </View>
   );
 }
