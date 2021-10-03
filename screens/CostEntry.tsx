@@ -65,12 +65,14 @@ export function CostEntryScreen({ navigation }: Props) {
             <>
               {months.map((m) => (
                 <View style={style.KeyValueStyle}>
-                  <Text
-                    style={{ flex: 1, fontSize: fontSize }}
-                  >{m}{" "}</Text>
+                  <Text style={{ flex: 1, fontSize: fontSize }}>{m} </Text>
 
                   <TextInput
-                    style={{ flex: 1, fontSize: fontSize, backgroundColor: "#FEF" }}
+                    style={{
+                      flex: 1,
+                      fontSize: fontSize,
+                      backgroundColor: "#FEF",
+                    }}
                     // label={m}
                     placeholder={"12"}
                     keyboardType="numeric"
@@ -96,7 +98,5 @@ const style = StyleSheet.create({
   KeyValueStyle: {
     flexDirection: "row",
     justifyContent: "space-between",
-
-
   },
 });
