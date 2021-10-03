@@ -19,7 +19,7 @@ function Navigator() {
       <RootStack.Navigator initialRouteName="Home">
         <RootStack.Screen name="Home" component={FirstPage} />
         <RootStack.Screen
-          name="OtherPage"
+          name="solarCost"
           component={OtherPage}
           options={{ title: "otherPage" }}
         />

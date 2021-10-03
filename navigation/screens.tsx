@@ -5,7 +5,7 @@ import { LatLng } from "react-native-maps";
 // ref https://reactnavigation.org/docs/typescript/#type-checking-the-navigator
 export type RootStackParamList = {
   Home: undefined;
-  OtherPage: undefined;
+  solarCost: undefined;
   LocationPage: undefined;
   GraphScreen: { cords: LatLng };
   CostEntryScreen: undefined;

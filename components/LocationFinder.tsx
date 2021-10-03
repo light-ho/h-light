@@ -6,6 +6,7 @@ import { Marker, Region, LatLng } from "react-native-maps";
 import { getCurrentLocation } from "../utils/location";
 
 import { STORAGEKEYS, storeData } from "../utils/asyncStorage";
+import { GLOBALVALUES } from "../globalstyle";
 
 const getInintialPosition = () => {
   return {
@@ -62,10 +63,11 @@ export default function LocationFinder() {
           <Button
             title="resync current location"
             onPress={tirggerSyncLocation}
+            color={GLOBALVALUES.thirdColor}
           />
         </View>
 
-        <View style={styles.actionButton}>
+        {/* <View style={styles.actionButton}>
           <Button
             title="Go to data page"
             onPress={() =>
@@ -74,7 +76,7 @@ export default function LocationFinder() {
               )
             }
           />
-        </View>
+        </View> */}
 
         <View style={styles.actionButton}>
           <Text>{`marker is pointing to ${markerLocation.latitude},${markerLocation.longitude}`}</Text>

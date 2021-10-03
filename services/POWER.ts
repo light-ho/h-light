@@ -3,8 +3,8 @@ import apiInstance from "../utils/api-instance";
 // import apiInstance from "./api-instance";
 export type TimeResolution = "hourly" | "daily" | "weekly" | "monthly";
 export interface POWERApiParams {
-  long: string;
-  lat: string;
+  long: number;
+  lat: number;
   from?: Date;
   to?: Date;
   resolution?: TimeResolution;
@@ -14,8 +14,17 @@ export interface IPOWER {
   getUpdatedUrl(params: POWERApiParams): Promise<any>;
 }
 
+const date2isodata = (date:Date)=>{ 
+  let mydate = date.toISOString().split('T')[0]
+  return mydate.replace(/-/g,"")
+}
+
+
 export class POWER implements IPOWER {
   getUpdatedUrl(params: POWERApiParams): Promise<any> {
+    
+    
+    
     let url = this.getApiUrl(params.resolution || "hourly");
 
     //change long
@@ -23,9 +32,9 @@ export class POWER implements IPOWER {
     //change lat
     url = this.changeParamters(params.lat, url, "latitude") || url;
     //change start
-    url = this.changeParamters(params.from, url, "start") || url;
+    url = this.changeParamters(params.from?.getFullYear(), url, "start") || url;
     //chnage end
-    url = this.changeParamters(params.to, url, "end") || url;
+    url = this.changeParamters(params.to?.getFullYear(), url, "end") || url;
 
     // TODO osama should implement this
     // return apiInstance. <Write your function here> using apiInstance.x instead of axios.x
@@ -64,6 +73,8 @@ export class POWER implements IPOWER {
   }
 
   getPowerData(url: string) {
+    console.log(url)
+    
     return apiInstance
       .get(url, {})
       .then((res) => {

@@ -12,6 +12,7 @@ import {
 } from "react-native";
 import { Formik } from "formik";
 import * as Yup from "yup";
+import { STORAGEKEYS, storeData } from "../utils/asyncStorage";
 
 type Props = NativeStackScreenProps<RootStackParamList, "CostEntryScreen">;
 
@@ -34,6 +35,17 @@ export function CostEntryScreen({ navigation }: Props) {
     "December",
   ];
 
+
+
+  const onsubmit = (values:any)=>{
+    console.log(values)
+    storeData(STORAGEKEYS.MonthlyBills,values).then(
+      ()=>{
+        navigation.navigate("Home")
+      }
+    )
+    
+  }
   return (
     <ScrollView>
       <Formik
