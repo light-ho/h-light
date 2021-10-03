@@ -2,6 +2,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 
 const STORAGEKEYS = {
   location: "location",
+
   solarCost: "solarCost",
   MonthlyBills: "MonthlyBills",
 };

@@ -50,7 +50,7 @@ export class POWER implements IPOWER {
     let val = value.toString(); //input can be dates,string,....
     if (val.length == 0)
       //if no parameter passed return
-      return;
+      return url;
 
     let wLength = (paramName + "=").length;
     let startIndx = url.indexOf(paramName + "=");
