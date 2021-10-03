@@ -5,35 +5,34 @@ import { View, Text, StyleSheet } from "react-native";
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../navigation/screens";
 
-import { VictoryChart, VictoryBar, VictoryTheme } from "victory-native";
+import {
+  VictoryChart,
+  VictoryBar,
+  VictoryTheme,
+  VictoryGroup,
+} from "victory-native";
 import { GLOBALVALUES } from "../globalstyle";
 import Tile from "../components/tile";
 import { getData, STORAGEKEYS } from "../utils/asyncStorage";
 import { useEffect, useState } from "react";
 import { LatLng } from "react-native-maps";
-import { IPOWER, POWER } from '../services/POWER';
+import { IPOWER, POWER } from "../services/POWER";
+import { MonthlyData as MonthlyBills } from "./CostEntry";
 
 type Props = NativeStackScreenProps<RootStackParamList, "Home">;
 
 const avg = (arr: number[]) => {
   return arr.reduce((a, b) => a + b, 0) / arr.length;
 };
-type t2mDataType = { date: string, value: number }[]
+type t2mDataType = { date: string; value: number }[];
 export default function FirstPage({ navigation }: Props) {
-  // const data = [
-  //   { quarter: 1, earnings: 13000 },
-  //   { quarter: 2, earnings: 16500 },
-  //   { quarter: 3, earnings: 14250 },
-  //   { quarter: 4, earnings: 19000 },
-  // ];
-
-
-
   const [markedLocation, setMarkedLocation] = useState<LatLng | undefined>(
     undefined
   );
   const [solarCost, setSolarCost] = useState(undefined);
-  const [monthlyBills, setMonthlyBills] = useState(undefined);
+  const [monthlyBills, setMonthlyBills] = useState<t2mDataType | undefined>(
+    undefined
+  );
 
   useEffect(() => {
     getData(STORAGEKEYS.location).then((location) => {
@@ -50,55 +49,59 @@ export default function FirstPage({ navigation }: Props) {
 
     getData(STORAGEKEYS.MonthlyBills).then((MonthlyBills) => {
       if (MonthlyBills) {
-        setMonthlyBills(JSON.parse(MonthlyBills));
+        const obj = JSON.parse(MonthlyBills);
+        Object.keys(obj).map((k) => {
+          return {
+            data: k,
+            value: obj[k],
+          };
+        });
+        setMonthlyBills(obj);
       }
     });
   }, []);
 
-
-
   const [data, setData] = useState<t2mDataType | undefined>(undefined);
 
-  console.log(data)
   useEffect(() => {
     if (markedLocation) {
-      const power = new POWER()
-      power.getUpdatedUrl({
-        long: markedLocation.longitude,
-        lat: markedLocation.latitude,
-        from: new Date(new Date().setFullYear(new Date().getFullYear() - 2)),
-        to: new Date(new Date().setFullYear(new Date().getFullYear() - 1)),
-        resolution: "monthly"
-      }).then(res => {
-        // console.log(res)
-        const t2m_data = res.properties.parameter.T2M
-        const t2m_object = Object.keys(t2m_data).map(k => {
-          return {
-            "date": k.split(/.{4}/)[1]
-            , value: t2m_data[k]
-          }
+      const power = new POWER();
+      power
+        .getUpdatedUrl({
+          long: markedLocation.longitude,
+          lat: markedLocation.latitude,
+          from: new Date(new Date().setFullYear(new Date().getFullYear() - 2)),
+          to: new Date(new Date().setFullYear(new Date().getFullYear() - 1)),
+          resolution: "monthly",
         })
-        setData(t2m_object)
-      })
-
+        .then((res) => {
+          const t2m_data = res.properties.parameter.T2M;
+          const t2m_object = Object.keys(t2m_data)
+            .filter((k) => k.split(/.{4}/)[1] !== "13")
+            .map((k) => {
+              return {
+                date: k.split(/.{4}/)[1],
+                value: t2m_data[k],
+              };
+            });
+          setData(t2m_object);
+        });
     }
-
-  }, [markedLocation])
+  }, [markedLocation]);
 
   const location_formatted = markedLocation
     ? `${markedLocation.latitude}, ${markedLocation.longitude}`
     : "No location";
   const cost_formatted = solarCost ? `${solarCost} K` : "cost not set";
   const bills_formatted = monthlyBills
-    ? `${avg(monthlyBills)} K`
+    ? // @ts-ignore // ignore the type for now
+      `${avg(Object.keys(monthlyBills).map((bill) => monthlyBills[bill]))} K`
     : "history cost not set";
 
-
-
-  console.log("home log *------------------------*")
-  console.log(location_formatted)
-  console.log(cost_formatted)
-  console.log(bills_formatted)
+  console.log("home log *------------------------*");
+  console.log(location_formatted);
+  console.log(cost_formatted);
+  console.log(bills_formatted);
 
   return (
     <View style={styles.container}>
@@ -121,16 +124,18 @@ export default function FirstPage({ navigation }: Props) {
           content={bills_formatted}
         />
       </View>
-      {data &&
+      {data && (
         <View style={styles.reportContatiner}>
           <Text style={{ fontSize: 20 }}>report</Text>
-          <VictoryChart width={350} theme={VictoryTheme.material}>
-            <VictoryBar data={data} x="date" y="value" />
+          <VictoryChart width={350}>
+            <VictoryGroup offset={20} colorScale={"qualitative"}>
+              <VictoryBar data={data} x="date" y="value" />
+              <VictoryBar data={monthlyBills} x="data" y="value" />
+            </VictoryGroup>
           </VictoryChart>
         </View>
-      }
+      )}
     </View>
-
   );
 }
 

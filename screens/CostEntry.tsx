@@ -16,6 +16,35 @@ import { STORAGEKEYS, storeData } from "../utils/asyncStorage";
 
 type Props = NativeStackScreenProps<RootStackParamList, "CostEntryScreen">;
 
+export const NumberForMonth = {
+  January: "01",
+  February: "02",
+  March: "03",
+  April: "04",
+  May: "05",
+  June: "06",
+  July: "07",
+  August: "08",
+  September: "09",
+  October: "10",
+  November: "11",
+  December: "12",
+};
+export interface MonthlyData {
+  January: string;
+  February: string;
+  March: string;
+  April: string;
+  May: string;
+  June: string;
+  July: string;
+  August: string;
+  September: string;
+  October: string;
+  November: string;
+  December: string;
+}
+
 const fontSize = 20;
 
 export function CostEntryScreen({ navigation }: Props) {
@@ -35,17 +64,12 @@ export function CostEntryScreen({ navigation }: Props) {
     "December",
   ];
 
-
-
-  const onsubmit = (values:any)=>{
-    console.log(values)
-    storeData(STORAGEKEYS.MonthlyBills,values).then(
-      ()=>{
-        navigation.navigate("Home")
-      }
-    )
-    
-  }
+  const onsubmit = (values: any) => {
+    console.log(values);
+    storeData(STORAGEKEYS.MonthlyBills, values).then(() => {
+      navigation.navigate("Home");
+    });
+  };
   return (
     <ScrollView>
       <Formik
