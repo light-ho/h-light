@@ -3,9 +3,9 @@
 
 <img src="https://img.shields.io/badge/Hosted%20by-NASA%20Space%20Challenge%20%F0%9F%8C%8D-%237834f0" alt="hosted by"/> <img alt="Powered By" src="https://img.shields.io/badge/Powered%20by-POWER%20API%20%F0%9F%96%A5%EF%B8%8F-%23999934"/> <img alt="Built with" src="https://img.shields.io/badge/Built%20with-React%20native%20%E2%9A%9B%EF%B8%8F-%23666699"/> <img alt="Linter" src="https://img.shields.io/badge/Linter-Prettier%20%F0%9F%96%8C%EF%B8%8F-%23eeeeee"/> 
 <hl/> <br/>
-  <h1>
+  <h4>
   For screenshots check <a href="https://github.com/light-ho/h-light/blob/main/SCREENS.md"> SCREENS.md </a>
-    </h1>
+    </h4>
 </div>
 
 ## Description
