@@ -87,10 +87,8 @@ export default function FirstPage({ navigation }: Props) {
       </View>
       {data && (
         <View style={styles.reportContatiner}>
-          <Text style={{ fontSize: 20 }}>report</Text>
-          <VictoryChart width={350} theme={VictoryTheme.material}>
-            <VictoryBar data={data} x="date" y="value" />
-          </VictoryChart>
+          <SolarChart data={data} />
+          <SolarTable data={data} />
         </View>
       )}
     </View>
@@ -103,7 +101,7 @@ const styles = StyleSheet.create({
     flexDirection: "column",
   },
   tileContainer: {
-    flex: 1,
+    height: "35%",
     flexDirection: "row",
     flexWrap: "wrap",
     justifyContent: "space-between",
