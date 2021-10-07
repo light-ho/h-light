@@ -75,17 +75,6 @@ export default function LocationFinder() {
           />
         </View>
 
-        {/* <View style={styles.actionButton}>
-          <Button
-            title="Go to data page"
-            onPress={() =>
-              console.log(
-                `go to ${markerLocation.latitude} and ${markerLocation.longitude}`
-              )
-            }
-          />
-        </View> */}
-
         <View style={styles.actionButton}>
           <Text>{`marker is pointing to ${markerLocation.latitude},${markerLocation.longitude}`}</Text>
         </View>

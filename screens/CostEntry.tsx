@@ -16,7 +16,7 @@ import { useGlobalContext } from "../context/homeContext";
 
 type Props = NativeStackScreenProps<RootStackParamList, "CostEntryScreen">;
 
-const fontSize = 20;
+const fontSize = 16;
 
 export function CostEntryScreen({ navigation }: Props) {
   const [costs, setCosts] = React.useState<any>({});
@@ -95,6 +95,7 @@ export function CostEntryScreen({ navigation }: Props) {
                         borderStyle: "solid",
                         padding: 12,
                         margin: 8,
+                        fontSize: fontSize,
                       }}
                     />
                   </View>
