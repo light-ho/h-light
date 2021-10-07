@@ -12,7 +12,7 @@ import {
 } from "react-native";
 import { Formik } from "formik";
 import * as Yup from "yup";
-import { STORAGEKEYS, storeData } from "../utils/asyncStorage";
+import { useGlobalContext } from "../context/homeContext";
 
 type Props = NativeStackScreenProps<RootStackParamList, "CostEntryScreen">;
 
@@ -35,11 +35,10 @@ export function CostEntryScreen({ navigation }: Props) {
     "December",
   ];
 
+  const { setMonthlyBills } = useGlobalContext();
   const onsubmit = (values: any) => {
-    console.log(values);
-    storeData(STORAGEKEYS.MonthlyBills, values).then(() => {
-      navigation.navigate("Home");
-    });
+    setMonthlyBills(Object.values(values));
+    navigation.navigate("Home");
   };
   return (
     <ScrollView>
@@ -58,7 +57,7 @@ export function CostEntryScreen({ navigation }: Props) {
           November: "",
           December: "",
         }}
-        onSubmit={(values) => console.log(JSON.stringify(values))}
+        onSubmit={onsubmit}
         validationSchema={Yup.object({
           January: Yup.number().required(),
           February: Yup.number().required(),

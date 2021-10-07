@@ -4,20 +4,19 @@ import { View, Text, Button, StyleSheet, TextInput } from "react-native";
 
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../navigation/screens";
-import { useState, useEffect } from "react";
-import { STORAGEKEYS, storeData } from "../utils/asyncStorage";
+import { useEffect } from "react";
 import { GLOBALVALUES } from "../globalstyle";
+import { useGlobalContext } from "../context/homeContext";
 
 type Props = NativeStackScreenProps<RootStackParamList, "solarCost">;
 
 export default function OtherPage({ navigation }: Props) {
-  const [solarCost, setSolarCost] = useState<string | undefined>(undefined);
+  const { solarCost, setSolarCost } = useGlobalContext();
 
   useEffect(() => {
     async () => {
       if (solarCost) {
-        console.log(solarCost);
-        await storeData(STORAGEKEYS.solarCost, solarCost);
+        await setSolarCost(solarCost);
       }
     };
   }, [solarCost]);

@@ -5,8 +5,8 @@ import MapView from "react-native-maps";
 import { Marker, Region, LatLng } from "react-native-maps";
 import { getCurrentLocation } from "../utils/location";
 
-import { STORAGEKEYS, storeData } from "../utils/asyncStorage";
 import { GLOBALVALUES } from "../globalstyle";
+import { useGlobalContext } from "../context/homeContext";
 
 const getInintialPosition = () => {
   return {
@@ -19,11 +19,15 @@ const getInintialPosition = () => {
 
 export default function LocationFinder() {
   const [region, setRegion] = useState<Region>(getInintialPosition());
+  //marker used in the map
   const [markerLocation, setMarkerLocation] = useState<LatLng>(
     getInintialPosition()
   );
+
+  // marked location for global context
+  const { setMarkedLocation } = useGlobalContext();
   const setLocationGlobal = async (location: LatLng) => {
-    await storeData(STORAGEKEYS.location, JSON.stringify(location));
+    await setMarkedLocation(location);
   };
 
   const [syncLocation, setSyncLocation] = useState(false);

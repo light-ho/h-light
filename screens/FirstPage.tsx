@@ -1,61 +1,29 @@
 import * as React from "react";
 
-import { View, Text, StyleSheet } from "react-native";
+import { View, StyleSheet } from "react-native";
 
 import { NativeStackScreenProps } from "@react-navigation/native-stack";
 import { RootStackParamList } from "../navigation/screens";
 
-import { VictoryChart, VictoryBar, VictoryTheme } from "victory-native";
 import { GLOBALVALUES } from "../globalstyle";
 import Tile from "../components/tile";
-import { getData, STORAGEKEYS } from "../utils/asyncStorage";
 import { useEffect, useState } from "react";
-import { LatLng } from "react-native-maps";
-import { IPOWER, POWER } from "../services/POWER";
+import { POWER } from "../services/POWER";
+import SolarChart from "../components/Chart";
+import SolarTable from "../components/SolarTable";
+import { useGlobalContext } from "../context/homeContext";
 
 type Props = NativeStackScreenProps<RootStackParamList, "Home">;
 
 const avg = (arr: number[]) => {
   return arr.reduce((a, b) => a + b, 0) / arr.length;
 };
-type t2mDataType = { date: string; value: number }[];
+export type t2mDataType = { date: string; value: number }[];
 export default function FirstPage({ navigation }: Props) {
-  // const data = [
-  //   { quarter: 1, earnings: 13000 },
-  //   { quarter: 2, earnings: 16500 },
-  //   { quarter: 3, earnings: 14250 },
-  //   { quarter: 4, earnings: 19000 },
-  // ];
-
-  const [markedLocation, setMarkedLocation] = useState<LatLng | undefined>(
-    undefined
-  );
-  const [solarCost, setSolarCost] = useState(undefined);
-  const [monthlyBills, setMonthlyBills] = useState(undefined);
-
-  useEffect(() => {
-    getData(STORAGEKEYS.location).then((location) => {
-      if (location) {
-        setMarkedLocation(JSON.parse(location));
-      }
-    });
-
-    getData(STORAGEKEYS.solarCost).then((solarCost) => {
-      if (solarCost) {
-        setSolarCost(JSON.parse(solarCost));
-      }
-    });
-
-    getData(STORAGEKEYS.MonthlyBills).then((MonthlyBills) => {
-      if (MonthlyBills) {
-        setMonthlyBills(JSON.parse(MonthlyBills));
-      }
-    });
-  }, []);
-
+  const { markedLocation, monthlyBills, solarCost } = useGlobalContext();
   const [data, setData] = useState<t2mDataType | undefined>(undefined);
 
-  console.log(data);
+  // update graph data when location change
   useEffect(() => {
     if (markedLocation) {
       const power = new POWER();
@@ -82,11 +50,13 @@ export default function FirstPage({ navigation }: Props) {
   }, [markedLocation]);
 
   const location_formatted = markedLocation
-    ? `${markedLocation.latitude}, ${markedLocation.longitude}`
+    ? `${markedLocation.latitude.toFixed(
+        4
+      )}, ${markedLocation.longitude.toFixed(4)}`
     : "No location";
   const cost_formatted = solarCost ? `${solarCost} K` : "cost not set";
   const bills_formatted = monthlyBills
-    ? `${avg(monthlyBills)} K`
+    ? `${avg(monthlyBills).toPrecision(4)} $`
     : "history cost not set";
 
   console.log("home log *------------------------*");
