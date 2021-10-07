@@ -10,6 +10,8 @@ export async function getCurrentLocation(): Promise<
     return;
   }
   // TODO add required acuracy
-  let location = await Location.getCurrentPositionAsync({});
+  let location = await Location.getCurrentPositionAsync({
+    accuracy: Location.Accuracy.Balanced,
+  });
   return location;
 }

@@ -35,7 +35,11 @@ export default function LocationFinder() {
     (async () => {
       const location = await getCurrentLocation();
       if (location) {
-        setRegion({ ...region, ...location.coords });
+        setRegion({
+          ...location.coords,
+          latitudeDelta: 0.02,
+          longitudeDelta: 0.02,
+        });
         setMarkerLocation(location.coords);
         setLocationGlobal(location.coords);
       }
