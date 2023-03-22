@@ -24,7 +24,7 @@
     "prettier": "^2.4.1",
     "react": "16.13.1",
     "react-dom": "16.13.1",
-    "react-native": "0.63.4",
+    "react-native": "0.64.1",
     "react-native-gesture-handler": "~1.10.2",
     "react-native-maps": "^0.29.3",
     "react-native-material-textfield": "^0.16.1",
